@@ -1,0 +1,430 @@
+﻿<Window x:Class="PL.MainWindow" 
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+        xmlns:local="clr-namespace:PL" 
+        xmlns:fa="http://schemas.fontawesome.io/icons/"
+        mc:Ignorable="d" Title="MediRoute - Manager Control Center" 
+        DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}" 
+        Height="720" Width="1150" Background="#FFF0F7FF" 
+        Loaded="Window_Loaded" Closed="Window_Closed"
+        Language="he-IL">
+
+    <Window.Resources>
+        <SolidColorBrush x:Key="MediBlue" Color="#005A9C"/>
+        <SolidColorBrush x:Key="BorderLightBlue" Color="#ADD8E6"/>
+        <SolidColorBrush x:Key="LightBackground" Color="#F0F7FF"/>
+
+        <DropShadowEffect x:Key="ZDepth1" BlurRadius="12" ShadowDepth="3" Color="#D1D5DB" Opacity="0.4"/>
+
+        <Style x:Key="ModernButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#ADD8E6"/>
+            <Setter Property="BorderBrush" Value="{StaticResource BorderLightBlue}"/>
+            <Setter Property="BorderThickness" Value="1.5"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Foreground" Value="{StaticResource MediBlue}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="12" 
+                                Background="{TemplateBinding Background}" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,5"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Background" Value="Gray"/>
+                    <Setter Property="Foreground" Value="#9CA3AF"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="ActionButtonStyle" TargetType="Button" BasedOn="{StaticResource ModernButtonStyle}">
+            <Setter Property="Background" Value="{StaticResource MediBlue}"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+        </Style>
+
+        <Style TargetType="TextBox">
+            <Setter Property="Height" Value="35"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="10,0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border CornerRadius="10" Background="White" BorderBrush="{StaticResource BorderLightBlue}" BorderThickness="1.5">
+                            <ScrollViewer x:Name="PART_ContentHost" Margin="5,0"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Background" Value="Gray"/>
+                    <Setter Property="Foreground" Value="#9CA3AF"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="FieldLabel" TargetType="TextBlock">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="FontWeight" Value="Medium"/>
+            <Setter Property="Foreground" Value="#6B7280"/>
+            <Setter Property="FontSize" Value="13"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid Margin="25">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1.3*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Border Grid.Column="0" Background="White" CornerRadius="24" Padding="30" Margin="10" Effect="{StaticResource ZDepth1}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <StackPanel Margin="0,0,0,25">
+                    <TextBlock Text="Control Panel" FontSize="32" FontWeight="Black" Foreground="#1F2937"/>
+                    <TextBlock Text="System configuration &amp; parameters" FontSize="14" Foreground="#9CA3AF"/>
+                    <Button Style="{StaticResource ModernButtonStyle}" 
+        Width="150" 
+        Height="50" 
+        HorizontalAlignment="Right" 
+        VerticalAlignment="Center" 
+        FontSize="20" 
+        Click="UpdateConfig_Click"
+        IsEnabled="{Binding ModeSimulator, Converter={StaticResource IsEnabledIntervalConverter}}">
+
+                        <StackPanel Orientation="Horizontal">
+                            <fa:ImageAwesome Icon="Save" 
+                         Foreground="White" 
+                         Height="20" 
+                         Margin="0,0,10,0" />
+
+                            <TextBlock Text="Update" 
+                   Foreground="White"
+                   VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+
+                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Padding="0,0,15,0">
+                    <StackPanel>
+                        <ItemsControl ItemsSource="{Binding Configuration}" >
+                            <StackPanel>
+                                <Grid Margin="0,6">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="180"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="Manager ID:" Style="{StaticResource FieldLabel}"/>
+                                    <TextBox Grid.Column="1" Text="{Binding Configuration.ManagerId, UpdateSourceTrigger=PropertyChanged}"/>
+                                </Grid>
+
+                                <Grid Margin="0,6">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="180"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="Manager Password:" Style="{StaticResource FieldLabel}"/>
+                                    <TextBox Grid.Column="1" Text="{Binding Configuration.ManagerPassword, UpdateSourceTrigger=PropertyChanged}"/>
+                                </Grid>
+
+                                <Grid Margin="0,6">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="180"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="Manager Salary:" Style="{StaticResource FieldLabel}"/>
+                                    <TextBox Grid.Column="1" Text="{Binding Configuration.ManagerSalary, UpdateSourceTrigger=PropertyChanged}"/>
+                                </Grid>
+
+                                <Grid Margin="0,6">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="180"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="Courier Salary:" Style="{StaticResource FieldLabel}"/>
+                                    <TextBox Grid.Column="1" Text="{Binding Configuration.CourierSalary, UpdateSourceTrigger=PropertyChanged}"/>
+                                </Grid>
+
+                                <Grid Margin="0,6">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="180"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="Company Address:" Style="{StaticResource FieldLabel}"/>
+                                    <TextBox Grid.Column="1" Text="{Binding Configuration.CompanyAddress, UpdateSourceTrigger=PropertyChanged}"/>
+                                </Grid>
+
+                                <Grid Margin="0,6">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="180"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="Maximum Distance:" Style="{StaticResource FieldLabel}"/>
+                                    <TextBox Grid.Column="1" Text="{Binding Configuration.MaximumDistanceKM, UpdateSourceTrigger=PropertyChanged}"/>
+                                </Grid>
+
+                                <Grid Margin="0,6">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="180"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="Max Time Window:" Style="{StaticResource FieldLabel}"/>
+                                    <TextBox Grid.Column="1" Text="{Binding Configuration.MaxTimeWindow, UpdateSourceTrigger=PropertyChanged}"/>
+                                </Grid>
+
+                                <Grid Margin="0,6">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="180"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="Risk Range:" Style="{StaticResource FieldLabel}"/>
+                                    <TextBox Grid.Column="1" Text="{Binding Configuration.RiskRange, UpdateSourceTrigger=PropertyChanged}"/>
+                                </Grid>
+
+                                <Grid Margin="0,6">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="180"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="Average Car Speed:" Style="{StaticResource FieldLabel}"/>
+                                    <TextBox Grid.Column="1" Text="{Binding Configuration.CarAvgSpeedKMH, UpdateSourceTrigger=PropertyChanged}"/>
+                                </Grid>
+
+                                <Grid Margin="0,6">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="180"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="Avg Motorcycle Speed:" Style="{StaticResource FieldLabel}"/>
+                                    <TextBox Grid.Column="1" Text="{Binding Configuration.MotorcycleAvgSpeedKMH, UpdateSourceTrigger=PropertyChanged}"/>
+                                </Grid>
+                            </StackPanel>
+                        </ItemsControl>
+                    </StackPanel>
+                </ScrollViewer>
+            </Grid>
+        </Border>
+
+        <Grid Grid.Column="1" Margin="10" Grid.RowSpan="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="4*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0" FontSize="30" FontWeight="Bold" HorizontalAlignment="Right" VerticalAlignment="Stretch" Margin="0,15,0,0">
+                <TextBlock.Foreground>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="Black"/>
+                        <GradientStop Color="#FF9B5BC1" Offset="1"/>
+                    </LinearGradientBrush>
+                </TextBlock.Foreground>
+    <InlineUIContainer>
+        <fa:ImageAwesome Icon="Motorcycle" 
+                         Height="28" 
+                         Margin="0,0,10,0" 
+                         VerticalAlignment="Center" 
+                         Foreground="{Binding RelativeSource={RelativeSource AncestorType=TextBlock}, Path=Foreground}"/>
+    </InlineUIContainer>
+    <Run Text="MediRoute"/>
+            </TextBlock>
+            <WrapPanel  Grid.Row="1" VerticalAlignment="Top" Margin="42,0,-38,0" >
+                <Button Background="White" Width="100" Height="70" Style="{StaticResource ModernButtonStyle}"  Margin="5" Padding="12" Effect="{StaticResource ZDepth1}" Click="btnDeliverdList_Click">
+                    <StackPanel HorizontalAlignment="Center">
+                        <TextBlock Text="Delivered" Foreground="#9CA3AF" FontSize="12" FontWeight="Bold" HorizontalAlignment="Center"/>
+                        <TextBlock Text="{Binding endStatus[1]}" FontSize="20" FontWeight="Black" Foreground="Black"  HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+
+                <Button Background="White" Width="100" Height="70" Style="{StaticResource ModernButtonStyle}"  Margin="5" Padding="12" Effect="{StaticResource ZDepth1}" Click="btnRefusesList_Click">
+                    <StackPanel HorizontalAlignment="Center">
+                        <TextBlock Text="Refuses" Foreground="#9CA3AF" FontSize="12" FontWeight="Bold" HorizontalAlignment="Center"/>
+                        <TextBlock Text="{Binding endStatus[2]}" FontSize="20" FontWeight="Black" Foreground="Black"  HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+
+                <Button Background="White" Width="100" Height="70" Style="{StaticResource ModernButtonStyle}"  Margin="5" Padding="12" Effect="{StaticResource ZDepth1}" Click="btnCanceledList_Click">
+                    <StackPanel HorizontalAlignment="Center">
+                        <TextBlock Text="Canceled" Foreground="#9CA3AF" FontSize="12" FontWeight="Bold" HorizontalAlignment="Center"/>
+                        <TextBlock Text="{Binding endStatus[3]}" FontSize="20" FontWeight="Black" Foreground="Black" HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+
+                <Button Background="White" Width="100" Height="70" Style="{StaticResource ModernButtonStyle}"  Margin="5" Padding="12" Effect="{StaticResource ZDepth1}" Click="btnNoRespondList_Click">
+                    <StackPanel HorizontalAlignment="Center">
+                        <TextBlock Text="No Respond" Foreground="#9CA3AF" FontSize="12" FontWeight="Bold" HorizontalAlignment="Center"/>
+                        <TextBlock Text="{Binding endStatus[4]}" FontSize="20" FontWeight="Black" Foreground="Black" HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+
+                <Button Background="White" Width="100" Height="70" Style="{StaticResource ModernButtonStyle}"  Margin="5" Padding="12" Effect="{StaticResource ZDepth1}" Click="btnNoFailedList_Click">
+                    <StackPanel HorizontalAlignment="Center">
+                        <TextBlock Text="Faild" Foreground="#9CA3AF" FontSize="12" FontWeight="Bold" HorizontalAlignment="Center"/>
+                        <TextBlock Text="{Binding endStatus[5]}" FontSize="20" FontWeight="Black" Foreground="Black" HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+
+                <Button Background="White" Width="100" Height="70" Style="{StaticResource ModernButtonStyle}"  Margin="5" Padding="12" Effect="{StaticResource ZDepth1}" Click="btnInProcessList_Click">
+                    <StackPanel HorizontalAlignment="Center">
+                        <TextBlock Text="In Process" Foreground="#9CA3AF" FontSize="12" FontWeight="Bold" HorizontalAlignment="Center"/>
+                        <TextBlock Text="{Binding endStatus[6]}" FontSize="20" FontWeight="Black" Foreground="Black"  HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+                <Button Background="White" Width="100" Height="70" Style="{StaticResource ModernButtonStyle}"  Margin="5" Padding="12" Effect="{StaticResource ZDepth1}" Click="btnPendingList_Click">
+                    <StackPanel HorizontalAlignment="Center">
+                        <TextBlock Text="Pending" Foreground="#9CA3AF" FontSize="12" FontWeight="Bold" HorizontalAlignment="Center"/>
+                        <TextBlock Text="{Binding endStatus[0]}" FontSize="20" FontWeight="Black" Foreground="Black" HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+
+            </WrapPanel>
+
+
+            <StackPanel Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center">
+                <Border Background="White" Width="441" Height="220" CornerRadius="110" 
+                        BorderBrush="{StaticResource BorderLightBlue}" BorderThickness="4" Effect="{StaticResource ZDepth1}">
+                    <StackPanel VerticalAlignment="Center" >
+                        <Label Content="{Binding CurrentTime}" FontSize="48" FontWeight="Black" Foreground="#1F2937" HorizontalAlignment="Center" />
+                        <Border Width="300" Height="4" Background="{StaticResource MediBlue}" CornerRadius="2" Margin="0,15,0,0"/>
+
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,20,0,0">
+                            <Button Style="{StaticResource ActionButtonStyle}" 
+                        Width="160" 
+                        Height="50" 
+                        Margin="10,0" 
+                        Click="btnStartStopSimulator_Click" 
+                        Background="#ADD8E6">
+                                <StackPanel Orientation="Horizontal">
+                                    <fa:ImageAwesome Icon="{Binding ModeSimulator, Converter={StaticResource startStopSimulatorIconConverter}}" 
+                                         Foreground="White" 
+                                         Height="20" 
+                                         Margin="0,0,10,0" />
+                                    <TextBlock FontSize="13" FontWeight="Medium" Text="{Binding ModeSimulator,Converter={StaticResource startStopSimulatorTextConverter}}" 
+                                   Foreground="White"
+                                   VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
+
+                            <TextBox
+                         Width="160" 
+                         Height="50" 
+                         Margin="10,0" 
+                         VerticalContentAlignment="Center" 
+                         FontSize="16"
+                         Text="{Binding Interval}"
+                         TextAlignment="Center"
+                         IsEnabled="{Binding ModeSimulator,Converter={StaticResource IsEnabledIntervalConverter}}"/>
+                        </StackPanel>
+                    </StackPanel>
+
+                </Border>
+
+                <UniformGrid Columns="5" Margin="0,40,0,0" Width="480">
+                    <Button Content="+Minute" Style="{StaticResource ModernButtonStyle}" Height="55" Margin="5" IsEnabled="{Binding ModeSimulator, Converter={StaticResource IsEnabledIntervalConverter}}" Click="btnAddOneMinute_Click"/>
+                    <Button Content="+Hour" Style="{StaticResource ModernButtonStyle}" Height="55" Margin="5"  IsEnabled="{Binding ModeSimulator, Converter={StaticResource IsEnabledIntervalConverter}}" Click="btnAddOneHour_Click"/>
+                    <Button Content="+Day" Style="{StaticResource ModernButtonStyle}" Height="55" Margin="5"  IsEnabled="{Binding ModeSimulator, Converter={StaticResource IsEnabledIntervalConverter}}" Click="btnAddOneDay_Click"/>
+                    <Button Content="+Month" Style="{StaticResource ModernButtonStyle}" Height="55" Margin="5"  IsEnabled="{Binding ModeSimulator, Converter={StaticResource IsEnabledIntervalConverter}}" Click="btnAddOneMonth"/>
+                    <Button Content="+Year" Style="{StaticResource ModernButtonStyle}" Height="55" Margin="5"  IsEnabled="{Binding ModeSimulator, Converter={StaticResource IsEnabledIntervalConverter}}" Click="btnAddOneYear"/>
+                </UniformGrid>
+            </StackPanel>
+        </Grid>
+
+        <Border Grid.Row="1" Background="White" CornerRadius="24" Padding="20" Margin="10,20,10,0" Effect="{StaticResource ZDepth1}">
+            <Grid HorizontalAlignment="Center">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="60"/>
+                </Grid.RowDefinitions>
+                <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
+                    <Button Style="{StaticResource ActionButtonStyle}" 
+        Width="200" 
+        Height="50" 
+        Margin="10,0" 
+        Click="btnCourier_Click" 
+        Background="#FF7282C3">
+
+                        <StackPanel Orientation="Horizontal">
+                            <fa:ImageAwesome Icon="Truck" 
+                         Foreground="white" 
+                         Height="20" 
+                         Margin="0,0,10,0" />
+
+                            <TextBlock Text="Couriers Management" 
+                   VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    <Button Style="{StaticResource ActionButtonStyle}" 
+        Width="200" 
+        Height="50" 
+        Margin="10,0" 
+        Click="btnOrder_Click" 
+        Background="#FF7282C3">
+                        <StackPanel Orientation="Horizontal">
+                            <fa:ImageAwesome Icon="Clipboard" 
+                         Foreground="White" 
+                         Height="20" 
+                         Margin="0,0,10,0" />
+
+                            <TextBlock Text="Orders Management" 
+                   Foreground="White"
+                   VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+
+                <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Bottom">
+                    <Button Style="{StaticResource ModernButtonStyle}" 
+        Width="200" 
+        Height="50" 
+        Margin="10,0" 
+        Click="btnInitializeDB_Click" 
+        IsEnabled="{Binding ModeSimulator, Converter={StaticResource IsEnabledIntervalConverter}}">
+                        <StackPanel Orientation="Horizontal">
+                            <fa:ImageAwesome Icon="Database" 
+                         Foreground="White" 
+                         Height="20" 
+                         Margin="0,0,10,0" />
+
+                            <TextBlock Text="Initialize DB" 
+                   Foreground="White"
+                   VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    <Button Style="{StaticResource ModernButtonStyle}" 
+        Width="200" 
+        Height="50" 
+        Margin="10,0" 
+        Click="btnResetDB_Click" 
+        IsEnabled="{Binding ModeSimulator, Converter={StaticResource IsEnabledIntervalConverter}}">
+                        <StackPanel Orientation="Horizontal">
+                            <fa:ImageAwesome Icon="Refresh" 
+                         Foreground="White" 
+                         Height="20" 
+                         Margin="0,0,10,0" />
+
+                            <TextBlock Text="Reset Database" 
+                   Foreground="White"
+                   VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

@@ -1,0 +1,48 @@
+﻿<Application x:Class="PL.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:PL"
+             xmlns:helpers="clr-namespace:PL.Helpers"
+             ShutdownMode="OnMainWindowClose">
+    <Application.Resources>
+        <helpers:OrdersCollection x:Key="OrdersCollectionKey"/>
+        <helpers:InOrOutCollection x:Key="InOrOutCollectionKey"/>
+        <helpers:OrderTypeCollection x:Key="OrderTypeCollectionKey"/>
+        <helpers:ScheduleStatusCollection x:Key="ScheduleStatusCollectionKey"/>
+        <helpers:CouriersCollection x:Key="CouriersCollectionKey"/>
+        <helpers:VehicleCollection x:Key="VehicleCollectionKey"/>
+        <helpers:OpenOrderCollection x:Key="OpenOrderCollectionKey" />
+        <helpers:ConvertUpdateToTrue x:Key="ConvertUpdateToTrueKey"/>
+        <helpers:ConvertUpdateToVisibility x:Key="ConvertUpdateToVisibilityKey"/>
+        <helpers:ComboVissibilityConverter x:Key="ComboVissibilityConverter"/>
+        <helpers:FilterCollectionConverter x:Key="FilterCollectionConverter"/>
+        <helpers:TextBlockVisibilityConverter x:Key="TextBlockVisibilityConverter"/>
+        <helpers:FilterChooseToStringConverter x:Key="FilterChooseToStringConverter"/>
+        <helpers:VissibilityToCancelConverter x:Key="VissibilityToCancelConverter"/>
+        <helpers:FilterSelectedItemToValueConverter x:Key="FilterSelectedItemToValueConverterKey"/>
+        <helpers:ConvertCourierCanBeDeletedToVisibility x:Key="ConvertCourierCanBeDeletedToVisibility"/>
+        <helpers:IdToErrorConverter x:Key="IdToErrorConverterKey"/>
+        <helpers:ConvertEnumToWords x:Key="ConvertEnumToWordsKey"/>
+        <helpers:RowColorConverter x:Key="RowColorConverter"/>
+        <helpers:PasswordVissibleConverter x:Key="PasswordVissibleConverter"/>
+        <helpers:RemainingTimeColorConverer x:Key="RemainingTimeColorConverer"/>
+        <helpers:IdValidationColorConverter x:Key="IdValidationColorConverter"/>
+        <helpers:EmailToErrorConverter x:Key="EmailToErrorConverterKey"/>
+        <helpers:PhoneToErrorConverter x:Key="PhoneToErrorConverterKey"/>
+        <helpers:PasswordToErrorconverter x:Key="PasswordToErrorconverterKey"/>
+        <helpers:OrderExistsToVisibilityConverter x:Key="OrderExistsToVisibilityConverterKey"/>
+        <helpers:OrderClosedToIsEnabledUpdateConvertor x:Key="OrderClosedToIsEnabledUpdateConvertorKey"/>
+        <helpers:ClosedDeliveryPropertyCollection x:Key="ClosedDeliveryPropertyCollectionKey"/>
+        <helpers:canBeCanceledToEnabledConverter x:Key="canBeCanceledToEnabledConverterKey"/>
+        <helpers:OrderExistsToenabledConverter x:Key="OrderExistsToenabledConverterKey"/>
+        <helpers:OrderStatusCollection x:Key="OrderStatusCollectionKey"/>
+        <helpers:VehicleRowColorConverter x:Key="VehicleRowColorConverterKey"/>
+        <helpers:startStopSimulatorTextConverter x:Key="startStopSimulatorTextConverter"/>
+        <helpers:startStopSimulatorIconConverter x:Key="startStopSimulatorIconConverter"/>
+        <helpers:IsEnabledIntervalConverter x:Key="IsEnabledIntervalConverter"/>
+        <helpers:visibilityToLoadedIcon x:Key="visibilityToLoadedIconKey"/>
+        <helpers:enabledToLoadedconvertor x:Key="enabledToLoadedconvertorKey"/>
+        <helpers:RemainingTimeColorValueConverer x:Key="RemainingTimeColorValueConverer"/>
+
+    </Application.Resources>
+</Application>

@@ -1,0 +1,280 @@
+﻿<Window x:Class="PL.Courier.CourierMainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:fa="http://schemas.fontawesome.io/icons/"
+        Title="Courier Dashboard" Height="700" Width="650"   
+        Background="#FFF8F0FF"
+        DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
+        WindowStartupLocation="CenterScreen"
+        Loaded="Window_Loaded"
+        Closed="Window_Closed">
+
+    <Window.Resources>
+        <SolidColorBrush x:Key="PrimaryPurple" Color="#A855F7"/>
+        <SolidColorBrush x:Key="LightPurple" Color="#F3E8FF"/>
+        <SolidColorBrush x:Key="BorderPurple" Color="#D1C4E9"/>
+
+        <Style TargetType="Label">
+            <Setter Property="Foreground" Value="{StaticResource PrimaryPurple}"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="20,0,10,0"/>
+        </Style>
+
+        <Style x:Key="BasePurpleTextBox" TargetType="TextBox">
+            <Setter Property="Height" Value="32"/>
+            <Setter Property="Width" Value="220"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="Margin" Value="5,8"/>
+            <Setter Property="Padding" Value="10,4"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="BorderBrush" Value="{StaticResource BorderPurple}"/>
+            <Setter Property="BorderThickness" Value="1.5"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border x:Name="BoxBorder" CornerRadius="15" Background="White" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="{TemplateBinding BorderThickness}">
+                            <ScrollViewer x:Name="PART_ContentHost" Margin="2,0"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="ComboBox">
+            <Setter Property="Height" Value="32"/>
+            <Setter Property="Width" Value="220"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="Margin" Value="5,8"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ComboBox">
+                        <Grid>
+                            <Border CornerRadius="15" Background="White" BorderBrush="{StaticResource BorderPurple}" BorderThickness="1.5">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="30"/>
+                                    </Grid.ColumnDefinitions>
+                                    <ContentPresenter Content="{TemplateBinding SelectionBoxItem}" Margin="12,0,0,0" VerticalAlignment="Center"/>
+                                    <Path Grid.Column="1" Data="M 0 0 L 4 4 L 8 0" Stroke="{StaticResource PrimaryPurple}" StrokeThickness="2" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                    <ToggleButton Grid.ColumnSpan="2" Background="Transparent" BorderThickness="0" IsChecked="{Binding IsDropDownOpen, RelativeSource={RelativeSource TemplatedParent}}"/>
+                                </Grid>
+                            </Border>
+                            <Popup Placement="Bottom" IsOpen="{TemplateBinding IsDropDownOpen}" AllowsTransparency="True">
+                                <Border Background="White" BorderBrush="{StaticResource BorderPurple}" BorderThickness="1" CornerRadius="8" MinWidth="{TemplateBinding ActualWidth}">
+                                    <ItemsPresenter/>
+                                </Border>
+                            </Popup>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="{StaticResource PrimaryPurple}"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="20" Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Background" Value="#FFAAAAAA"/>
+                    <Setter Property="Foreground" Value="#FF666666"/>
+                </Trigger>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#FF9333EA"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+
+    <Border Background="{StaticResource LightPurple}" Padding="20">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0" Text="Courier Information" FontSize="28" FontWeight="ExtraBold" 
+                       Foreground="{StaticResource PrimaryPurple}" HorizontalAlignment="Center" Margin="0,0,0,20"/>
+
+            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="220"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <Label Grid.Row="0" Content="ID:"/>
+                    <TextBox Grid.Row="0" Grid.Column="1" Style="{StaticResource BasePurpleTextBox}" Text="{Binding CurrentCourier.Id}" IsReadOnly="True"/>
+
+                    <Label Grid.Row="1" Content="Full Name:"/>
+                    <TextBox Grid.Row="1" Grid.Column="1" Style="{StaticResource BasePurpleTextBox}" Text="{Binding CurrentCourier.Name}"/>
+
+                    <Label Grid.Row="2" Content="Phone:"/>
+                    <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding CurrentCourier.PhoneNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                        <TextBox.Style>
+                            <Style TargetType="TextBox" BasedOn="{StaticResource BasePurpleTextBox}">
+                                <Style.Triggers>
+                                    <MultiDataTrigger>
+                                        <MultiDataTrigger.Conditions>
+                                            <Condition Binding="{Binding CurrentCourier.PhoneNumber, Converter={StaticResource PhoneToErrorConverterKey}}" Value="True"/>
+                                            <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsFocused}" Value="False"/>
+                                        </MultiDataTrigger.Conditions>
+                                        <Setter Property="BorderBrush" Value="Red"/>
+                                        <Setter Property="BorderThickness" Value="2"/>
+                                    </MultiDataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBox.Style>
+                    </TextBox>
+
+                    <Label Grid.Row="3" Content="Email:"/>
+                    <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding CurrentCourier.Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                        <TextBox.Style>
+                            <Style TargetType="TextBox" BasedOn="{StaticResource BasePurpleTextBox}">
+                                <Style.Triggers>
+                                    <MultiDataTrigger>
+                                        <MultiDataTrigger.Conditions>
+                                            <Condition Binding="{Binding CurrentCourier.Email, Converter={StaticResource EmailToErrorConverterKey}}" Value="True"/>
+                                            <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsFocused}" Value="False"/>
+                                        </MultiDataTrigger.Conditions>
+                                        <Setter Property="BorderBrush" Value="Red"/>
+                                        <Setter Property="BorderThickness" Value="2"/>
+                                    </MultiDataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBox.Style>
+                    </TextBox>
+
+                    <Label Grid.Row="4" Content="Password:"/>
+                    <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding CurrentCourier.Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                        <TextBox.Style>
+                            <Style TargetType="TextBox" BasedOn="{StaticResource BasePurpleTextBox}">
+                                <Style.Triggers>
+                                    <MultiDataTrigger>
+                                        <MultiDataTrigger.Conditions>
+                                            <Condition Binding="{Binding CurrentCourier.Password, Converter={StaticResource PasswordToErrorconverterKey}}" Value="True"/>
+                                            <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsFocused}" Value="False"/>
+                                        </MultiDataTrigger.Conditions>
+                                        <Setter Property="BorderBrush" Value="Red"/>
+                                        <Setter Property="BorderThickness" Value="2"/>
+                                    </MultiDataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBox.Style>
+                    </TextBox>
+
+                    <Label Grid.Row="5" Content="Salary:"/>
+                    <TextBox Grid.Row="5" Grid.Column="1" Style="{StaticResource BasePurpleTextBox}" Text="{Binding CurrentCourier.Salary}"/>
+
+                    <Label Grid.Row="6"  Content="Active Status:"/>
+                    <CheckBox Grid.Row="6" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Column="1" IsChecked="{Binding CurrentCourier.Active}" IsEnabled="False" />
+
+                    <Label Grid.Row="7" Content="Max Distance:"/>
+                    <TextBox Grid.Row="7" Grid.Column="1" Style="{StaticResource BasePurpleTextBox}" Text="{Binding CurrentCourier.MaxPersonalDistance}"/>
+
+                    <Label Grid.Row="8" Content="Vehicle Type:"/>
+                    <ComboBox Grid.Row="8" Grid.Column="1" ItemsSource="{Binding Source={StaticResource VehicleCollectionKey}}" SelectedItem="{Binding CurrentCourier.Vehicle}"/>
+
+                    <Label Grid.Row="9" Content="Employment Date:"/>
+                    <DatePicker Grid.Row="9" Grid.Column="1" SelectedDate="{Binding CurrentCourier.EmploymentDate}" IsEnabled="False" Margin="5,8" Width="150" HorizontalAlignment="Left"/>
+
+                    <Label Grid.Row="10" Content="On Time Delivery:"/>
+                    <TextBox Grid.Row="10" Grid.Column="1" Style="{StaticResource BasePurpleTextBox}" Text="{Binding CurrentCourier.NumOfProvidedOnTime}" IsReadOnly="True"/>
+
+                    <Label Grid.Row="11" Content="Late Delivery:"/>
+                    <TextBox Grid.Row="11" Grid.Column="1" Style="{StaticResource BasePurpleTextBox}" Text="{Binding CurrentCourier.NumOfProvidedLate}" IsReadOnly="True"/>
+
+                    <Label Grid.Row="12" Content="Active Order:" Visibility="{Binding CurrentCourier.ExistingOrder, Converter={StaticResource OrderExistsToVisibilityConverterKey}}" />
+                    <StackPanel Grid.Row="12" Grid.Column="1" Orientation="Horizontal">
+                        <TextBox Style="{StaticResource BasePurpleTextBox}" Text="{Binding CurrentCourier.ExistingOrder.OrderId}" IsReadOnly="True" Width="150" Visibility="{Binding CurrentCourier.ExistingOrder, Converter={StaticResource OrderExistsToVisibilityConverterKey}}" />
+                        <Button Width="80" Height="32" Margin="5,0" Visibility="{Binding CurrentCourier.ExistingOrder, Converter={StaticResource OrderExistsToVisibilityConverterKey}}" Click="btnView_Click">
+                            <StackPanel Orientation="Horizontal">
+                                <fa:ImageAwesome Icon="Eye" Foreground="White" Height="14" Margin="0,0,5,0" />
+                                <TextBlock Text="View"/>
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
+
+                    <Label Grid.Row="13" Content="Order End Type:" Visibility="{Binding CurrentCourier.ExistingOrder, Converter={StaticResource OrderExistsToVisibilityConverterKey}}" />
+                    <StackPanel Grid.Row="13" Grid.Column="1" Orientation="Horizontal">
+                        <ComboBox ItemsSource="{Binding FilteredStatusList}" SelectedItem="{Binding SelectedEndStatus, Mode=TwoWay}" Visibility="{Binding CurrentCourier.ExistingOrder, Converter={StaticResource OrderExistsToVisibilityConverterKey}}" />
+                        <Button Content="End" Width="90" Height="32" Margin="5,0" Click="btnEndDelivery_Click" Visibility="{Binding CurrentCourier.ExistingOrder, Converter={StaticResource OrderExistsToVisibilityConverterKey}}"/>
+                    </StackPanel>
+                </Grid>
+            </ScrollViewer>
+
+            <UniformGrid Grid.Row="2" Columns="3" Margin="0,10,0,0">
+                <Button Click="btnUpdate_Click" Margin="5">
+                    <StackPanel Orientation="Horizontal">
+                        <fa:ImageAwesome Icon="Refresh" Foreground="White" Height="18" Margin="0,0,10,0" />
+                        <TextBlock Text="Update"/>
+                    </StackPanel>
+                </Button>
+                <Button Click="btnHistory_Click" Margin="5">
+                    <StackPanel Orientation="Horizontal">
+                        <fa:ImageAwesome Icon="History" Foreground="White" Height="18" Margin="0,0,10,0" />
+                        <TextBlock Text="History"/>
+                    </StackPanel>
+                </Button>
+                <Button Click="btnPickOrder_Click" Margin="5">
+                    <StackPanel Orientation="Horizontal">
+                        <fa:ImageAwesome Icon="Truck" Foreground="White" Height="18" Margin="0,0,10,0" />
+                        <TextBlock Text="Pick Order"/>
+                    </StackPanel>
+                    <Button.IsEnabled>
+                        <MultiBinding Converter="{StaticResource OrderExistsToenabledConverterKey}">
+                            <Binding Path="CurrentCourier.ExistingOrder" />
+                            <Binding Path="CurrentCourier.Active" />
+                        </MultiBinding>
+                    </Button.IsEnabled>
+                </Button>
+            </UniformGrid>
+
+            <TextBlock Grid.Row="3" FontSize="30" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,15,0,0">
+                <TextBlock.Foreground>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="Black"/>
+                        <GradientStop Color="#A855F7" Offset="1"/>
+                    </LinearGradientBrush>
+                </TextBlock.Foreground>
+                <InlineUIContainer>
+                    <fa:ImageAwesome Icon="Motorcycle" Height="25" Margin="0,0,10,0" VerticalAlignment="Center" Foreground="#A855F7"/>
+                </InlineUIContainer>
+                <Run Text="MediRoute"/>
+            </TextBlock>
+        </Grid>
+    </Border>
+</Window>

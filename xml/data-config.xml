@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<config>
+  <NextDeliveryId>12968</NextDeliveryId>
+  <NextOrderId>17172</NextOrderId>
+  <Clock>04/04/2031 15:39:53</Clock>
+  <ManagerId>215868001</ManagerId>
+  <ManagerPassword>QWxDczEyMzQ=</ManagerPassword>
+  <ManagerSalary>400</ManagerSalary>
+  <CourierSalary>35</CourierSalary>
+  <CompanyAddress>12, Shmuel Bayit Street, Jerusalem</CompanyAddress>
+  <Latitude>31.7705</Latitude>
+  <Longitude>35.2294</Longitude>
+  <MaximumDistanceKM>320</MaximumDistanceKM>
+  <CarAvgSpeedKMH>50</CarAvgSpeedKMH>
+  <MotorcycleAvgSpeedKMH>60</MotorcycleAvgSpeedKMH>
+  <BicycleAvgSpeedKMH>22</BicycleAvgSpeedKMH>
+  <OnFootAvgSpeedKMH>5</OnFootAvgSpeedKMH>
+  <MaxTimeWindow>7.00:00:00</MaxTimeWindow>
+  <RiskRange>2.00:00:00</RiskRange>
+  <CourierNotActive>14.00:00:00</CourierNotActive>
+</config>

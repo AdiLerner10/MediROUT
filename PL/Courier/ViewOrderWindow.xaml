@@ -1,0 +1,180 @@
+﻿<Window x:Class="PL.Courier.ViewOrderWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.expression.blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+       xmlns:fa="http://schemas.fontawesome.io/icons/"
+        mc:Ignorable="d"
+        Title="View Order Details"
+        Height="650" 
+        Width="500" 
+        Background="#FFF0F7FF"
+        DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
+        Loaded="Window_Loaded"
+        Closed="Window_Closed">
+
+    <Window.Resources>
+        <DropShadowEffect x:Key="ZDepth1" BlurRadius="8" ShadowDepth="2" Color="#AABBCC" Opacity="0.4"/>
+
+        <Style TargetType="Label">
+            <Setter Property="Foreground" Value="#A855F7"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="10,0,0,0"/>
+        </Style>
+
+        <Style TargetType="TextBox">
+            <Setter Property="Height" Value="28"/>
+            <Setter Property="Width" Value="200"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="8,2"/>
+            <Setter Property="Margin" Value="0,4"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderBrush" Value="#ADD8E6"/>
+            <Setter Property="BorderThickness" Value="1.5"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border CornerRadius="8" Background="{TemplateBinding Background}" 
+                                BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                            <ScrollViewer x:Name="PART_ContentHost"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="DatePicker">
+            <Setter Property="Height" Value="28"/>
+            <Setter Property="Width" Value="200"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="0,4"/>
+        </Style>
+
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderBrush" Value="#ADD8E6"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="Foreground" Value="#A855F7"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Height" Value="35"/>
+            <Setter Property="Width" Value="120"/>
+            <Setter Property="Effect" Value="{StaticResource ZDepth1}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="15" Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="200" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="35" />
+                    <RowDefinition Height="35" />
+                    <RowDefinition Height="35" />
+                    <RowDefinition Height="35" />
+                    <RowDefinition Height="35" />
+                    <RowDefinition Height="35" />
+                    <RowDefinition Height="35" />
+                    <RowDefinition Height="35" />
+                    <RowDefinition Height="35" />
+                    <RowDefinition Height="35" />
+                    <RowDefinition Height="35" />
+                    <RowDefinition Height="35" />
+                    <RowDefinition Height="35" />
+                    <RowDefinition Height="35" />
+                    <RowDefinition Height="35" />
+                    <RowDefinition Height="35" />
+                </Grid.RowDefinitions>
+
+                <Label Grid.Row="0" Grid.Column="0" Content="Delivery Id:"/>
+                <TextBox   Grid.Row="0" Grid.Column="1" Text="{Binding currentOrderInProgress.DeliveryId}" IsReadOnly="True"/>
+
+                <Label Grid.Row="1" Grid.Column="0" Content="Order Id:"/>
+                <TextBox   Grid.Row="1" Grid.Column="1" Text="{Binding currentOrderInProgress.OrderId}" IsReadOnly="True"/>
+
+                <Label Grid.Row="2" Grid.Column="0" Content="Order Type:"/>
+                <TextBox   Grid.Row="2" Grid.Column="1" Text="{Binding currentOrderInProgress.OrderType, Converter={StaticResource ConvertEnumToWordsKey}}" IsReadOnly="True"/>
+
+                <Label Grid.Row="3" Grid.Column="0" Content="Incoming/Outgoing:"/>
+                <TextBox   Grid.Row="3" Grid.Column="1" Text="{Binding currentOrderInProgress.InOrOut}" IsReadOnly="True"/>
+
+                <Label Grid.Row="4" Grid.Column="0" Content="Description:"/>
+                <TextBox   Grid.Row="4" Grid.Column="1" Text="{Binding currentOrderInProgress.Description}" IsReadOnly="True"/>
+
+                <Label Grid.Row="5" Grid.Column="0" Content="Address:"/>
+                <TextBox   Grid.Row="5" Grid.Column="1" Text="{Binding currentOrderInProgress.Address}" IsReadOnly="True"/>
+
+                <Label Grid.Row="6" Grid.Column="0" Content="Air Distance:"/>
+                <TextBox   Grid.Row="6" Grid.Column="1" Text="{Binding currentOrderInProgress.AirDistance}" IsReadOnly="True"/>
+
+                <Label Grid.Row="7" Grid.Column="0" Content="Actual Distance:"/>
+                <TextBox   Grid.Row="7" Grid.Column="1" Text="{Binding currentOrderInProgress.ActualDistance}" IsReadOnly="True"/>
+
+                <Label Grid.Row="8" Grid.Column="0" Content="Client Name:"/>
+                <TextBox   Grid.Row="8" Grid.Column="1" Text="{Binding currentOrderInProgress.ClientName}" IsReadOnly="True"/>
+
+                <Label Grid.Row="9" Grid.Column="0" Content="Client Phone:"/>
+                <TextBox   Grid.Row="9" Grid.Column="1" Text="{Binding currentOrderInProgress.ClientPhoneNumber}" IsReadOnly="True"/>
+
+                <Label Grid.Row="10" Grid.Column="0" Content="Order Open Time:"/>
+                <DatePicker Grid.Row="10" Grid.Column="1" SelectedDate="{Binding currentOrderInProgress.OrderOpenTime}" IsEnabled="False"/>
+
+                <Label Grid.Row="11" Grid.Column="0" Content="Delivery Start Time:"/>
+                <DatePicker Grid.Row="11" Grid.Column="1" SelectedDate="{Binding currentOrderInProgress.OrderDeliveryStartTime}" IsEnabled="False"/>
+
+                <Label Grid.Row="12" Grid.Column="0" Content="Expected Delivery:"/>
+                <DatePicker Grid.Row="12" Grid.Column="1" SelectedDate="{Binding currentOrderInProgress.ExpectedDeliveryTime}" IsEnabled="False"/>
+
+                <Label Grid.Row="13" Grid.Column="0" Content="Max Delivery Time:"/>
+                <DatePicker Grid.Row="13" Grid.Column="1" SelectedDate="{Binding currentOrderInProgress.MaxDeliveryTime}" IsEnabled="False"/>
+
+                <Label Grid.Row="14" Grid.Column="0" Content="Order Status:"/>
+                <TextBox   Grid.Row="14" Grid.Column="1" Text="{Binding currentOrderInProgress.OrderStatus}" IsReadOnly="True"/>
+
+                <Label Grid.Row="15" Grid.Column="0" Content="Schedule Status:"/>
+                <TextBox   Grid.Row="15" Grid.Column="1" Text="{Binding currentOrderInProgress.ScheduleStatus}"/>
+            </Grid>
+        </ScrollViewer>
+
+        <Button Grid.Row="1" Content="Back" Click="backBtn_Click" HorizontalAlignment="Center" Margin="0,15,0,0"/>
+        <TextBlock Grid.Row="2" FontSize="30" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,15,0,0">
+            <TextBlock.Foreground>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="Black"/>
+                    <GradientStop Color="#FF9B5BC1" Offset="1"/>
+                </LinearGradientBrush>
+            </TextBlock.Foreground>
+    <InlineUIContainer>
+        <fa:ImageAwesome Icon="Motorcycle" 
+                         Height="28" 
+                         Margin="0,0,10,0" 
+                         VerticalAlignment="Center" 
+                         Foreground="{Binding RelativeSource={RelativeSource AncestorType=TextBlock}, Path=Foreground}"/>
+    </InlineUIContainer>
+    <Run Text="MediRoute"/>
+        </TextBlock>
+    </Grid>
+</Window>
